@@ -25,6 +25,7 @@
 
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text } from 'react-native';
+import ProductDetailsScreen from './src/screens/ProductDetailsScreen';
 import ProductsScreen from './src/screens/ProductsScreen';
 // import Navigation from './src/navigation';
 // import { Provider } from 'react-redux';
@@ -38,8 +39,8 @@ export default function App() {
   return (
 
     <View>
-      <ProductsScreen />
-
+      {/* <ProductsScreen /> */}
+      <ProductDetailsScreen />
       <StatusBar style="auto" />
     </View>
   );

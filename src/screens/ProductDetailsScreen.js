@@ -11,31 +11,32 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import products from '../data/products';
-import { useSelector, useDispatch } from 'react-redux';
-import { cartSlice } from '../store/cartSlice';
-import { useGetProductQuery } from '../store/apiSlice';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { cartSlice } from '../store/cartSlice';
+// import { useGetProductQuery } from '../store/apiSlice';
 
 const ProductDetailsScreen = ({ route }) => {
-  const id = route.params.id;
+  // const id = route.params.id;
+const product=products[0];
+  // const { data, isLoading, error } = useGetProductQuery(id);
+  // const product = data?.data;
 
-  const { data, isLoading, error } = useGetProductQuery(id);
-  const product = data?.data;
-
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const { width } = useWindowDimensions();
 
   const addToCart = () => {
-    dispatch(cartSlice.actions.addCartItem({ product }));
+    console.warn('add to cart')
+    // dispatch(cartSlice.actions.addCartItem({ product }));
   };
 
-  if (isLoading) {
-    return <ActivityIndicator />;
-  }
+  // if (isLoading) {
+  //   return <ActivityIndicator />;
+  // }
 
-  if (error) {
-    return <Text>Error fetching the product. {error.error}</Text>;
-  }
+  // if (error) {
+  //   return <Text>Error fetching the product. {error.error}</Text>;
+  // }
 
   return (
     <View>

@@ -9,128 +9,149 @@ import {
   Alert,
 } from 'react-native';
 import CartListItem from '../components/CartListItem';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectDeliveryPrice,
-  selectSubtotal,
-  selectTotal,
-  cartSlice,
-} from '../store/cartSlice';
-import {
-  useCreateOrderMutation,
-  useCreatePaymentIntentMutation,
-} from '../store/apiSlice';
+import cart from '../data/cart';
+// import { useDispatch, useSelector } from 'react-redux';
+// import {
+//   selectDeliveryPrice,
+//   selectSubtotal,
+//   selectTotal,
+//   cartSlice,
+// } from '../store/cartSlice';
+// import {
+//   useCreateOrderMutation,
+//   useCreatePaymentIntentMutation,
+// } from '../store/apiSlice';
 // @ts-ignore
-import { useStripe } from '@stripe/stripe-react-native';
+// import { useStripe } from '@stripe/stripe-react-native';
 
-const ShoppingCartTotals = () => {
-  const subtotal = useSelector(selectSubtotal);
-  const deliveryFee = useSelector(selectDeliveryPrice);
-  const total = useSelector(selectTotal);
+//  const ShoppingCartTotals = () => {
+//   const subtotal = useSelector(selectSubtotal);
+//   const deliveryFee = useSelector(selectDeliveryPrice);
+//   const total = useSelector(selectTotal);
 
-  return (
-    <View style={styles.totalsContainer}>
-      <View style={styles.row}>
-        <Text style={styles.text}>Subtotal</Text>
-        <Text style={styles.text}>{subtotal} US$</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.text}>Delivery</Text>
-        <Text style={styles.text}>{deliveryFee} US$</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.textBold}>Total</Text>
-        <Text style={styles.textBold}>{total} US$</Text>
-      </View>
-    </View>
-  );
-};
+//   return (
+//     <View style={styles.totalsContainer}>
+//       <View style={styles.row}>
+//         <Text style={styles.text}>Subtotal</Text>
+//         <Text style={styles.text}>{subtotal} US$</Text>
+//       </View>
+//       <View style={styles.row}>
+//         <Text style={styles.text}>Delivery</Text>
+//         <Text style={styles.text}>{deliveryFee} US$</Text>
+//       </View>
+//       <View style={styles.row}>
+//         <Text style={styles.textBold}>Total</Text>
+//         <Text style={styles.textBold}>{total} US$</Text>
+//       </View>
+//     </View>
+//   );
+// };
 
+// const ShoppingCart = () => {
+//   const subtotal = useSelector(selectSubtotal);
+//   const deliveryFee = useSelector(selectDeliveryPrice);
+//   const total = useSelector(selectTotal);
+//   const dispatch = useDispatch();
+
+//   const cartItems = useSelector((state) => state.cart.items);
+
+//   const [createOrder, { data, error, isLoading }] = useCreateOrderMutation();
+
+//   const [createPaymentIntent] = useCreatePaymentIntentMutation();
+
+//   const { initPaymentSheet, presentPaymentSheet } = useStripe();
+
+//   const onCheckout = async () => {
+//     // 1. Create a payment intent
+//     const response = await createPaymentIntent({
+//       amount: Math.floor(total * 100),
+//     });
+//     if (response.error) {
+//       Alert.alert('Something went wrong');
+//       return;
+//     }
+
+//     // 2. Initialize the Payment sheet
+//     const initResponse = await initPaymentSheet({
+//       merchantDisplayName: 'notJust.dev',
+//       paymentIntentClientSecret: response.data.paymentIntent,
+//     });
+//     if (initResponse.error) {
+//       console.log(initResponse.error);
+//       Alert.alert('Something went wrong');
+//       return;
+//     }
+
+//     // 3. Present the Payment Sheet from Stripe
+//     const paymentResponse = await presentPaymentSheet();
+
+//     if (paymentResponse.error) {
+//       Alert.alert(
+//         `Error code: ${paymentResponse.error.code}`,
+//         paymentResponse.error.message
+//       );
+//       return;
+//     }
+
+//     // 4. If payment ok -> create the order
+//     onCreateOrder();
+//   };
+
+//   const onCreateOrder = async () => {
+//     const result = await createOrder({
+//       items: cartItems,
+//       subtotal,
+//       deliveryFee,
+//       total,
+//       customer: {
+//         name: 'Vadim',
+//         address: 'My home',
+//         email: 'vadim@notjust.dev',
+//       },
+//     });
+
+//     if (result.data?.status === 'OK') {
+//       Alert.alert(
+//         'Order has been submitted',
+//         `Your order reference is: ${result.data.data.ref}`
+//       );
+//       dispatch(cartSlice.actions.clear());
+//     }
+//   };
 const ShoppingCart = () => {
-  const subtotal = useSelector(selectSubtotal);
-  const deliveryFee = useSelector(selectDeliveryPrice);
-  const total = useSelector(selectTotal);
-  const dispatch = useDispatch();
-
-  const cartItems = useSelector((state) => state.cart.items);
-
-  const [createOrder, { data, error, isLoading }] = useCreateOrderMutation();
-
-  const [createPaymentIntent] = useCreatePaymentIntentMutation();
-
-  const { initPaymentSheet, presentPaymentSheet } = useStripe();
-
-  const onCheckout = async () => {
-    // 1. Create a payment intent
-    const response = await createPaymentIntent({
-      amount: Math.floor(total * 100),
-    });
-    if (response.error) {
-      Alert.alert('Something went wrong');
-      return;
-    }
-
-    // 2. Initialize the Payment sheet
-    const initResponse = await initPaymentSheet({
-      merchantDisplayName: 'notJust.dev',
-      paymentIntentClientSecret: response.data.paymentIntent,
-    });
-    if (initResponse.error) {
-      console.log(initResponse.error);
-      Alert.alert('Something went wrong');
-      return;
-    }
-
-    // 3. Present the Payment Sheet from Stripe
-    const paymentResponse = await presentPaymentSheet();
-
-    if (paymentResponse.error) {
-      Alert.alert(
-        `Error code: ${paymentResponse.error.code}`,
-        paymentResponse.error.message
-      );
-      return;
-    }
-
-    // 4. If payment ok -> create the order
-    onCreateOrder();
-  };
-
-  const onCreateOrder = async () => {
-    const result = await createOrder({
-      items: cartItems,
-      subtotal,
-      deliveryFee,
-      total,
-      customer: {
-        name: 'Vadim',
-        address: 'My home',
-        email: 'vadim@notjust.dev',
-      },
-    });
-
-    if (result.data?.status === 'OK') {
-      Alert.alert(
-        'Order has been submitted',
-        `Your order reference is: ${result.data.data.ref}`
-      );
-      dispatch(cartSlice.actions.clear());
-    }
-  };
-
   return (
-    <>
-      <FlatList
-        data={cartItems}
-        renderItem={({ item }) => <CartListItem cartItem={item} />}
-        ListFooterComponent={ShoppingCartTotals}
-      />
-      <Pressable onPress={onCheckout} style={styles.button}>
-        <Text style={styles.buttonText}>
-          Checkout
-          {isLoading && <ActivityIndicator />}
-        </Text>
-      </Pressable>
+
+<>
+    <FlatList
+      data={cart}
+      renderItem={({ item }) => <CartListItem cartItem={item} />}
+      ListFooterComponent={() => (
+        <View style={ styles.totalsContainer}>
+          <View style={styles.row }>
+            <Text style={styles.text}>Subtotal</Text>
+            <Text style={styles.text}>410,00 US$</Text>
+          </View>
+
+          <View style={styles.row }>
+            <Text style={styles.text}>Delivery</Text>
+            <Text style={styles.text}>10,00 US$</Text>
+          </View>
+
+          <View style={styles.row }>
+            <Text style={styles.text}>Total</Text>
+            <Text style={styles.text}>420,00 US$</Text>
+          </View>
+        </View>
+      )}
+    />
+    <Pressable
+    //  onPress={onCheckout}
+      style={styles.button}>
+      <Text style={styles.buttonText}>
+        Checkout
+        {/* {isLoading && <ActivityIndicator />} */}
+      </Text>
+    </Pressable> 
     </>
   );
 };

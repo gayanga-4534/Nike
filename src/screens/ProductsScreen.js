@@ -86,14 +86,15 @@ const ProductsScreen = ({ navigation }) => {
       data={products}
       renderItem={({ item }) => (
         <Pressable
-          onPress={() => {
+          onPress={() => navigation.navigate('Product Details' )}
             // update selected product
             // dispatch(productsSlice.actions.setSelectedProduct(item.id));
 
-            navigation.navigate('Product Details', { id: item._id });
-          }}
+            
+
           style={styles.itemContainer}
         >
+          
           <Image source={{ uri: item.image }} style={styles.image} />
         </Pressable>
       )}

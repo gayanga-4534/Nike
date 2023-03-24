@@ -12,7 +12,8 @@ import {
 } from 'react-native';
 import products from '../data/products';
 import { useSelector, useDispatch } from 'react-redux';
-// import { cartSlice } from '../store/cartSlice';
+import { cartSlice } from '../store/cartSlice';
+
 // import { useGetProductQuery } from '../store/apiSlice';
 
 const ProductDetailsScreen = ({ route }) => {
@@ -21,13 +22,13 @@ const product=useSelector((state)=>state.products.selectedProduct);
   // const { data, isLoading, error } = useGetProductQuery(id);
   // const product = data?.data;
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const { width } = useWindowDimensions();
 
   const addToCart = () => {
-    console.warn('add to cart')
-    // dispatch(cartSlice.actions.addCartItem({ product }));
+    // console.warn('add to cart')  
+    dispatch(cartSlice.actions.addCartItem({ product }));
   };
 
   // if (isLoading) {

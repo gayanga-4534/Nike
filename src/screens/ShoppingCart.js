@@ -9,14 +9,14 @@ import {
   Alert,
 } from 'react-native';
 import CartListItem from '../components/CartListItem';
-import cart from '../data/cart';
-// import { useDispatch, useSelector } from 'react-redux';
-// import {
-//   selectDeliveryPrice,
-//   selectSubtotal,
-//   selectTotal,
-//   cartSlice,
-// } from '../store/cartSlice';
+// import cart from '../data/cart';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  selectDeliveryPrice,
+  selectSubtotal,
+  selectTotal,
+  cartSlice,
+} from '../store/cartSlice';
 // import {
 //   useCreateOrderMutation,
 //   useCreatePaymentIntentMutation,
@@ -24,28 +24,28 @@ import cart from '../data/cart';
 // @ts-ignore
 // import { useStripe } from '@stripe/stripe-react-native';
 
-//  const ShoppingCartTotals = () => {
-//   const subtotal = useSelector(selectSubtotal);
-//   const deliveryFee = useSelector(selectDeliveryPrice);
-//   const total = useSelector(selectTotal);
+ const ShoppingCartTotals = () => {
+  const subtotal = useSelector(selectSubtotal);
+  const deliveryFee = useSelector(selectDeliveryPrice);
+  const total = useSelector(selectTotal);
 
-//   return (
-//     <View style={styles.totalsContainer}>
-//       <View style={styles.row}>
-//         <Text style={styles.text}>Subtotal</Text>
-//         <Text style={styles.text}>{subtotal} US$</Text>
-//       </View>
-//       <View style={styles.row}>
-//         <Text style={styles.text}>Delivery</Text>
-//         <Text style={styles.text}>{deliveryFee} US$</Text>
-//       </View>
-//       <View style={styles.row}>
-//         <Text style={styles.textBold}>Total</Text>
-//         <Text style={styles.textBold}>{total} US$</Text>
-//       </View>
-//     </View>
-//   );
-// };
+  return (
+    <View style={styles.totalsContainer}>
+      <View style={styles.row}>
+        <Text style={styles.text}>Subtotal</Text>
+        <Text style={styles.text}>{subtotal} US$</Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.text}>Delivery</Text>
+        <Text style={styles.text}>{deliveryFee} US$</Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.textBold}>Total</Text>
+        <Text style={styles.textBold}>{total} US$</Text>
+      </View>
+    </View>
+  );
+};
 
 // const ShoppingCart = () => {
 //   const subtotal = useSelector(selectSubtotal);
@@ -119,27 +119,33 @@ import cart from '../data/cart';
 //     }
 //   };
 const ShoppingCart = () => {
+
+  const subtotal = useSelector(selectSubtotal);
+  const deliveryFee = useSelector(selectDeliveryPrice);
+  const total = useSelector(selectTotal);
+
+  const cartItems=useSelector((state)=>state.cart.items);
   return (
 
 <>
     <FlatList
-      data={cart}
+      data={cartItems}
       renderItem={({ item }) => <CartListItem cartItem={item} />}
       ListFooterComponent={() => (
         <View style={ styles.totalsContainer}>
           <View style={styles.row }>
             <Text style={styles.text}>Subtotal</Text>
-            <Text style={styles.text}>410,00 US$</Text>
+            <Text style={styles.text}>{subtotal} US$</Text>
           </View>
 
           <View style={styles.row }>
             <Text style={styles.text}>Delivery</Text>
-            <Text style={styles.text}>10,00 US$</Text>
+            <Text style={styles.text}>{deliveryFee} US$</Text>
           </View>
 
           <View style={styles.row }>
             <Text style={styles.text}>Total</Text>
-            <Text style={styles.text}>420,00 US$</Text>
+            <Text style={styles.text}>{total} US$</Text>
           </View>
         </View>
       )}

@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   button: {
     position: 'absolute',
     backgroundColor: 'black',
-    bottom: -90,
+    bottom: 30,
     width: '90%',
     alignSelf: 'center',
     padding: 20,

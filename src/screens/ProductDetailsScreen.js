@@ -11,13 +11,13 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import products from '../data/products';
-// import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // import { cartSlice } from '../store/cartSlice';
 // import { useGetProductQuery } from '../store/apiSlice';
 
 const ProductDetailsScreen = ({ route }) => {
   // const id = route.params.id;
-const product=products[0];
+const product=useSelector((state)=>state.products.selectedProduct);
   // const { data, isLoading, error } = useGetProductQuery(id);
   // const product = data?.data;
 

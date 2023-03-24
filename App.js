@@ -96,6 +96,8 @@ import ShoppingCart from './src/screens/ShoppingCart';
 import { Pressable, Text } from 'react-native';
 
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Provider } from 'react-redux';
+import { store } from './src/store';
 // import { useSelector } from 'react-redux';
 // import { selectNumberOfItems } from './store/cartSlice';
 // import TrackOrder from './screens/TrackOrder';
@@ -106,6 +108,7 @@ const App = () => {
   // const numberOfItems = useSelector(selectNumberOfItems);
 
   return (
+    <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator> 
       <Stack.Screen
@@ -130,7 +133,7 @@ const App = () => {
              <Stack.Screen
           name="Product Details"
           component={ProductDetailsScreen}
-          options={{ presentation: 'modal' }}
+          options={{ presentation: 'modal',animation: 'slide_from_bottom' }}
         /> 
                  <Stack.Screen
           name="Cart"
@@ -140,6 +143,7 @@ const App = () => {
      </Stack.Navigator>
       {/* <ProductsScreen/> */}
     </NavigationContainer>
+    </Provider>
   );
 };
 
